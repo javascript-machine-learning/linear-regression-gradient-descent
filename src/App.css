@@ -1,0 +1,15 @@
+svg {
+  background: #F3F3F3;
+}
+
+circle {
+  fill: #FFFFFF;
+  stroke: #FF0000;
+  stroke-width: 3;
+  r: 5;
+}
+
+line {
+  stroke-width: 3;
+  stroke: #000000;
+}
