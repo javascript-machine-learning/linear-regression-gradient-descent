@@ -5,7 +5,7 @@ import './App.css';
 
 const M = 5;
 
-// random training data preparation
+// generate random training set
 
 const DATA = [];
 
@@ -25,6 +25,8 @@ const x = DATA.map(date => date.squareMeter);
 const y = DATA.map(date => date.price);
 
 // linear regression and gradient descent
+
+const LEARNING_RATE = 0.000001;
 
 let m = 0;
 let b = 0;
@@ -57,19 +59,13 @@ const cost = () => {
   return sum / (2 * m);
 }
 
+// count iterations
+
+let iteration = 0;
+
 // view
 
 class App extends React.Component {
-  constructor() {
-    super();
-
-    this.state = {
-      iteration: 0,
-    };
-
-    this.onLearn = this.onLearn.bind(this);
-  }
-
   componentDidMount() {
     this.interval = setInterval(this.onLearn, 100);
   }
@@ -78,10 +74,12 @@ class App extends React.Component {
     clearInterval(this.interval);
   }
 
-  onLearn() {
-    learn(0.000001);
+  onLearn = () => {
+    learn(LEARNING_RATE);
 
-    this.setState(state => ({ iteration: state.iteration + 1 }));
+    iteration++;
+
+    this.forceUpdate();
   }
 
   render() {
@@ -93,7 +91,7 @@ class App extends React.Component {
         />
 
         <div>
-          <Iteration iteration={this.state.iteration} />
+          <Iteration iteration={iteration} />
           <Hypothesis />
           <Cost />
         </div>
