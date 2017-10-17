@@ -56,7 +56,7 @@ const cost = () => {
     sum += Math.pow(hypothesis(x[i]) - y[i], 2);
   }
 
-  return sum / (2 * m);
+  return sum / (2 * M);
 }
 
 // count iterations
