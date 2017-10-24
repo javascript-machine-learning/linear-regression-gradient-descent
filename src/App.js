@@ -3,7 +3,7 @@ import './App.css';
 
 // adjust training set size
 
-const M = 5;
+const M = 10;
 
 // generate random training set
 
@@ -13,8 +13,8 @@ const getRandomIntFromInterval = (min, max) =>
   Math.floor(Math.random() * (max - min + 1) + min);
 
 const createRandomPortlandHouse = () => ({
-  squareMeter: getRandomIntFromInterval(0, 500),
-  price: getRandomIntFromInterval(0, 500),
+  squareMeter: getRandomIntFromInterval(0, 100),
+  price: getRandomIntFromInterval(0, 100),
 });
 
 for (let i = 0; i < M; i++) {
@@ -26,33 +26,30 @@ const y = DATA.map(date => date.price);
 
 // linear regression and gradient descent
 
-const LEARNING_RATE = 0.000001;
+const LEARNING_RATE = 0.0003;
 
-let m = 0;
-let b = 0;
+let thetaOne = 0;
+let thetaZero = 0;
 
-const hypothesis = x => m * x + b;
+const hypothesis = x => thetaZero + thetaOne * x;
 
 const learn = (alpha) => {
-  if (x.length <= 0) return;
+  let thetaZeroSum = 0;
+  let thetaOneSum = 0;
 
-  let sum1 = 0;
-  let sum2 = 0;
-
-  for (var i = 0; i < x.length; i++) {
-    sum1 += hypothesis(x[i]) - y[i];
-    sum2 += (hypothesis(x[i]) - y[i]) * x[i];
+  for (let i = 0; i < M; i++) {
+    thetaZeroSum += hypothesis(x[i]) - y[i];
+    thetaOneSum += (hypothesis(x[i]) - y[i]) * x[i];
   }
 
-  // b didn't change as much as m, so the learning rate is adjusted, anyone knows why?
-  b = b - 100000 * alpha * sum1 / (x.length);
-  m = m - alpha * sum2 / (x.length);
+  thetaZero = thetaZero - (alpha / M) * thetaZeroSum;
+  thetaOne = thetaOne - (alpha / M) * thetaOneSum;
 }
 
 const cost = () => {
   let sum = 0;
 
-  for (var i = 0; i < x.length; i++) {
+  for (let i = 0; i < M; i++) {
     sum += Math.pow(hypothesis(x[i]) - y[i], 2);
   }
 
@@ -67,7 +64,7 @@ let iteration = 0;
 
 class App extends React.Component {
   componentDidMount() {
-    this.interval = setInterval(this.onLearn, 100);
+    this.interval = setInterval(this.onLearn, 1);
   }
 
   componentWillUnmount() {
@@ -101,19 +98,19 @@ class App extends React.Component {
 }
 
 const Plot = ({ x, y }) =>
-  <svg width="500" height="500">
+  <svg width="100" height="100">
     <line
       x1="0"
-      y1={500 - hypothesis(0)}
-      x2="500"
-      y2={500 - hypothesis(500)}
+      y1={100 - hypothesis(0)}
+      x2="100"
+      y2={100 - hypothesis(100)}
     />
 
     {DATA.map((date, key) =>
       <circle
         key={key}
         cx={date[x]}
-        cy={500 - date[y]}
+        cy={100 - date[y]}
       />
     )}
   </svg>
@@ -125,7 +122,7 @@ const Iteration = ({ iteration }) =>
 
 const Hypothesis = () =>
   <p>
-    <strong>Hypothesis:</strong> f(x) = {m.toFixed(2)}x + {b.toFixed(2)}
+    <strong>Hypothesis:</strong> f(x) = {thetaZero.toFixed(2)} + {thetaOne.toFixed(2)}x
   </p>
 
 const Cost = () =>
