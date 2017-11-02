@@ -8,7 +8,7 @@ This example project demonstrates how the [gradient descent](http://en.wikipedia
 
 ## Installation
 
-* `git clone git@github.com:rwieruch/linear-regression-gradient-descent.git`
+* `git clone git@github.com:javascript-machine-learning/linear-regression-gradient-descent.git`
 * `cd linear-regression-gradient-descent`
 * `npm install`
 * `npm start`
