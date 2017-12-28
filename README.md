@@ -1,5 +1,7 @@
 # Linear Regression with Gradient Descent
 
+[![Build Status](https://travis-ci.org/javascript-machine-learning/linear-regression-gradient-descent.svg?branch=master)](https://travis-ci.org/javascript-machine-learning/linear-regression-gradient-descent)
+
 This example project demonstrates how the [gradient descent](http://en.wikipedia.org/wiki/Gradient_descent) algorithm may be used to solve a [linear regression](http://en.wikipedia.org/wiki/Linear_regression) problem.
 
 [Read more about it here.](https://www.robinwieruch.de/linear-regression-gradient-descent-javascript/)
